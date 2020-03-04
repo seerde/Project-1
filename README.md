@@ -51,7 +51,6 @@ Your Tic Tac Toe app must:
 If you are feeling creative and want to try something new, then go for it! In order to go this route you must run your idea by the instructional team first.
 
 - your proposal must include: a summary of your idea, a wire frame ([this](https://wireframe.cc/) is a good site to make wireframnes), what you think the biggest challenges will be.
-- Proposals should be created as "issues" in this repository.
 - Proposals are flexible! You are welcome to update and adjust these as the project continues.
 
 Need some ideas? Keep reading!
