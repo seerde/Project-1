@@ -16,8 +16,8 @@
     margin-bottom: 0;
     margin-left: auto;
     margin-right: auto;
-    display: none;
-    /* display: flex; */
+    /* display: none; */
+    display: flex;
     flex-direction: column;
     justify-content: center;
     text-align: center;
@@ -40,7 +40,7 @@
 
 /*/////////////////////////////////*/
 .game {
-    /* display: none; */
+    display: none;
     background-color: rgb(128, 48, 18);
     width: 80%;
     height: 100vh;
@@ -55,7 +55,7 @@
     height: 100%;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     justify-items: center;
     align-items: center;
 }
