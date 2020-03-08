@@ -1,0 +1,74 @@
+* {
+    margin: 0;
+    border: 1px solid black;
+    font-family: "myFirstFont";
+}
+.menu {
+    height: 100vh;
+    background-color: darksalmon;
+    /* background-image: linear-gradient(to right top, #41bb3d, #27b452, #08ad63, #00a56f, #009d78, #00957d, #008d80, #008581, #007c80, #00737e, #00697a, #006075); */
+}
+.menu__container {
+    background-color: coral;
+    width: 80%;
+    height: 100vh;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: none;
+    /* display: flex; */
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+.logo {
+    width: 60%;
+    margin: 0 auto;
+    padding: 10%;
+    font-size: 70px;
+}
+.menu__items__container {
+    width: 60%;
+    margin: 0 auto;
+    padding: 10%;
+    display: flex;
+    flex-direction: column;
+    font-size: 50px;
+    
+}
+
+/*/////////////////////////////////*/
+.game {
+    /* display: none; */
+    background-color: rgb(128, 48, 18);
+    width: 80%;
+    height: 100vh;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+.grid {
+    background-color: darkslategrey;
+    width: 70%;
+    height: 100%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+}
+.tile {
+    background-color: dodgerblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+@font-face {
+    font-family: myFirstFont;
+    src: url(/css/Passero_One/PasseroOne-Regular.ttf);
+  }
