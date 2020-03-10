@@ -1,4 +1,5 @@
-let tilesMat = createMap(40,40);
+// 0 = save, 1 = player, 2 = cars, 3 = save(moving)
+let tilesMat = createMap(40,20);
 printMap();
 
 let menuScreen = $(".menu__container");
@@ -14,7 +15,11 @@ let startGame = $("#start__game");
 
 let y=0, x=0;
 let sy=0, sx=7;
-let cy=sy, cx=sx;
+let check=0, check2=0, check3=0, check4=0;
+
+let min=2000, max=4001;
+let randomInt = Math.floor(Math.random() * (max - min)) + min;
+let carSpeed = 400;
 findChar();
 drawTiles();
 
@@ -22,6 +27,7 @@ startGame.click(function(e){
     menuScreen.hide();
     gameScreen.show();
 });
+
 // w = 87 a = 65 s = 83 d = 68
 // [id='']
 $(document).keydown(function (e) {
@@ -32,7 +38,7 @@ $(document).keydown(function (e) {
             if((y-1) < 0){
                 break;
             }
-            if(tilesMat[y-1][x] == 0){
+            if(tilesMat[y-1][x] == 0 || tilesMat[y-1][x] == 3){
                 let currentTile = $("[id='" + y + " " + x + "']");
                 let nexTile = $("[id='" + (y-1) + " " + x + "']");
                 nexTile.html(currentTile.html());
@@ -41,11 +47,15 @@ $(document).keydown(function (e) {
                 tilesMat[y-1][x] = 1;
                 printMap();
             }
+            else {
+                alert("Game over");
+                location.reload(true);
+            }
             break;
         case 65:
             findChar();
             console.log("A");
-            if(tilesMat[y][x-1] == 0){
+            if(tilesMat[y][x-1] == 0 || tilesMat[y][x-1] == 3){
                 let currentTile = $("[id='" + y + " " + x + "']");
                 let nexTile = $("[id='" + y + " " + (x-1) + "']");
                 nexTile.html(currentTile.html());
@@ -54,6 +64,10 @@ $(document).keydown(function (e) {
                 tilesMat[y][x-1] = 1;
                 printMap();
             }
+            else {
+                alert("Game over");
+                location.reload(true);
+            }
             break;
         case 83:
             findChar();
@@ -61,7 +75,7 @@ $(document).keydown(function (e) {
             if((y+1) > (tilesMat.length-1)){
                 break;
             }
-            if(tilesMat[y+1][x] == 0){
+            if(tilesMat[y+1][x] == 0 || tilesMat[y+1][x] == 3){
                 let currentTile = $("[id='" + y + " " + x + "']");
                 let nexTile = $("[id='" + (y+1) + " " + x + "']");
                 nexTile.html(currentTile.html());
@@ -70,11 +84,15 @@ $(document).keydown(function (e) {
                 tilesMat[y+1][x] = 1;
                 printMap();
             }
+            else {
+                alert("Game over");
+                location.reload(true);
+            }
             break;
         case 68:
             findChar();
             console.log("D");
-            if(tilesMat[y][x+1] == 0){
+            if(tilesMat[y][x+1] == 0 || tilesMat[y][x+1] == 3){
                 let currentTile = $("[id='" + y + " " + x + "']");
                 let nexTile = $("[id='" + y + " " + (x+1) + "']");
                 nexTile.html(currentTile.html());
@@ -83,19 +101,165 @@ $(document).keydown(function (e) {
                 tilesMat[y][x+1] = 1;
                 printMap();
             }
+            else {
+                alert("Game over");
+                location.reload(true);
+            }
             break;
         default:
             break;
     }
 });
 
-let mySpawner = spawnCar();
+spawnCar();
+spawnCarRev();
+
+spawner1();
+function spawner1() {
+    let min = 2000, max = 5001;
+    let rand = Math.floor(Math.random() * (max - min + 1) + min);
+    spawnCar();
+    setTimeout(spawner1, rand);
+}
+spawner2();
+function spawner2() {
+    let min = 2000, max = 4001;
+    let rand = Math.floor(Math.random() * (max - min + 1) + min);
+    spawnCarRev();
+    setTimeout(spawner2, rand);
+}
+spawner3();
+function spawner3() {
+    let min = 400, max = 700;
+    let rand = Math.floor(Math.random() * (max - min + 1) + min);
+    spawnCarFast();
+    setTimeout(spawner3, rand);
+}
+lilypadSpawner();
+function lilypadSpawner(){
+    let rand = 0;
+    if(check < 2){
+        console.log(check);
+        let min = 500, max = 501;
+        rand = Math.floor(Math.random() * (max - min + 1) + min);
+        spawnLilypad();
+        check++;
+    }
+    else{
+        let min = 3000, max = 6001;
+        rand = Math.floor(Math.random() * (max - min + 1) + min);
+        spawnLilypad();
+        check=0;
+    }
+
+    setTimeout(lilypadSpawner, rand);
+}
+LogSpawner();
+function LogSpawner(){
+    let rand = 0;
+    if(check2 < 4){
+        console.log(check);
+        let min = 1000, max = 1001;
+        rand = Math.floor(Math.random() * (max - min + 1) + min);
+        spawnLog();
+        check2++;
+    }
+    else{
+        let min = 6000, max = 9001;
+        rand = Math.floor(Math.random() * (max - min + 1) + min);
+        spawnLog();
+        check2=0;
+    }
+
+    setTimeout(LogSpawner, rand);
+}
+LogSpawnerRev();
+function LogSpawnerRev(){
+    let rand = 0;
+    if(check3 < 9){
+        console.log(check);
+        let min = 1000, max = 1001;
+        rand = Math.floor(Math.random() * (max - min + 1) + min);
+        spawnLogRev();
+        check3++;
+    }
+    else{
+        let min = 6000, max = 9001;
+        rand = Math.floor(Math.random() * (max - min + 1) + min);
+        spawnLogRev();
+        check3=0;
+    }
+
+    setTimeout(LogSpawnerRev, rand);
+}
+lilypadSpawnerRev();
+function lilypadSpawnerRev(){
+    let rand = 0;
+    if(check4 < 1){
+        let min = 500, max = 501;
+        rand = Math.floor(Math.random() * (max - min + 1) + min);
+        spawnLilypadRev();
+        check4++;
+    }
+    else{
+        let min = 3000, max = 6001;
+        rand = Math.floor(Math.random() * (max - min + 1) + min);
+        spawnLilypadRev();
+        check4=0;
+    }
+
+    setTimeout(lilypadSpawnerRev, rand);
+}
 
 setInterval(function(e){
-    if(cy == tilesMat.length){
-        clearInterval(mySpawner);
+    randomInt = Math.floor(Math.random() * (max - min)) + min;
+
+    if(tilesMat[38][2] == 2){
+        $("[id='" + 38 + " " + 2 + "']").html("");
+        $("[id='" + 38 + " " + 4 + "']").html("");
+        tilesMat[38][2] = 0;
+        tilesMat[38][4] = 0;
+        clearInterval(spawnCar);
     }
-}, 500);
+    if(tilesMat[0][3] == 2){
+        $("[id='" + 0 + " " + 3 + "']").html("");
+        tilesMat[0][8] = 0;
+        clearInterval(spawnCarRev);
+    }
+    if(tilesMat[38][5] == 2){
+        $("[id='" + 38 + " " + 5 + "']").html("");
+        tilesMat[38][5] = 0;
+        clearInterval(spawnCarFast);
+    }
+    if(tilesMat[39][8] == 3){
+        $("[id='" + 39 + " " + 8 + "']").html("");
+        $("[id='"+ 39 +" "+ 8 +"']").removeAttr('style');
+        $("[id='"+ 39 +" "+ 8 +"']").css("background-color", "rgb(18, 18, 126)");
+        tilesMat[39][8] = 2;
+        clearInterval(spawnLilypad);
+    }
+    if(tilesMat[0][9] == 3){
+        $("[id='" + 0 + " " + 9 + "']").html("");
+        $("[id='"+ 0 +" "+ 9 +"']").removeAttr('style');
+        $("[id='"+ 0 +" "+ 9 +"']").css("background-color", "rgb(18, 18, 126)");
+        tilesMat[0][9] = 2;
+        clearInterval(spawnLog);
+    }
+    if(tilesMat[39][10] == 3){
+        $("[id='" + 39 + " " + 10 + "']").html("");
+        $("[id='"+ 39 +" "+ 10 +"']").removeAttr('style');
+        $("[id='"+ 39 +" "+ 10 +"']").css("background-color", "rgb(18, 18, 126)");
+        tilesMat[39][10] = 2;
+        clearInterval(spawnLogRev);
+    }
+    if(tilesMat[0][11] == 3){
+        $("[id='" + 0 + " " + 11 + "']").html("");
+        $("[id='"+ 0 +" "+ 11 +"']").removeAttr('style');
+        $("[id='"+ 0 +" "+ 11 +"']").css("background-color", "rgb(18, 18, 126)");
+        tilesMat[0][11] = 2;
+        clearInterval(spawnLilypadRev);
+    }
+}, 100);
 
 function findChar(){
     for(let i=0; i<tilesMat.length; i++){
@@ -105,7 +269,6 @@ function findChar(){
             }
         }
     }
-    console.log("Y = " + y + " X = " + x);
 }
 function printMap(){
     let tmp = ""
@@ -115,7 +278,7 @@ function printMap(){
         }
         tmp += "\n";
     }
-    console.log(tmp);
+    console.log(tmp+"\n");
 }
 
 function drawTiles(){
@@ -123,15 +286,21 @@ function drawTiles(){
     for(let i=0; i<tilesMat[0].length; i++){
         fr += "1fr "
     }
-    console.log(fr);
     $(".grid").css("grid-template-columns" , fr);
     for(let i=0; i<tilesMat.length; i++){
         for(let j=0; j<tilesMat[i].length; j++){
             if(tilesMat[i][j] == 1){
-                gridMap.append("<div id='" + i +" " + j +"' class='tile'><img src='https:/placehold.it/30x30' /></div>");
+                gridMap.append("<div id='" + i +" " + j +"' class='tile'><img src='/img/frogger.png' width='30' height='30'/></div>");
             }
             else {
                 gridMap.append("<div id='" + i +" " + j +"' class='tile'></div>");
+            }
+            if(j > 1 && j < 6){
+                $("[id='" + i + " "+ j + "']").css("background-color", "black");
+            }
+            if(j > 7 && j < 14){
+                $("[id='" + i + " "+ j + "']").css("background-color", "rgb(18, 18, 126)");
+                tilesMat[i][j] = 2;
             }
         }
     }
@@ -144,34 +313,266 @@ function createMap(y, x){
     for(let i=0; i<mapArry.length; i++){
         for(let j=0; j<mapArry[i].length; j++){
             mapArry[i][j] = 0;
-            if(i == (y/2) && j == (x/2)){
+            if(i == (y/2) && j == 0){
                 mapArry[i][j] = 1;
             }
         }
     }
-    console.log(mapArry);
     return mapArry;
 }
 function spawnCar(){
-    tilesMat[0][7] = 2;
-    $("[id='0 7']").append("<img src='https:/placehold.it/30x30' />");
-    let spawnCar = setInterval(function(e){
+    let cy = 0, cx = 2;
+    let cy2 = 0, cx2 = 4;
+    tilesMat[cy][cx] = 2;
+    tilesMat[cy2][cx2] = 2;
+    $("[id='0 2']").append("<img src='/img/slow_car1.png' width='30' height='30'/>");
+    $("[id='0 4']").append("<img src='/img/slow_car3.png' width='30' height='30'/>");
+    setInterval(function(e){
+        if((cy+1) < tilesMat.length){
+            moveElement(cy, cx);
+        }
+        if((cy2+1) < tilesMat.length){
+            moveElement(cy2, cx2);
+        }
+    }, carSpeed);
+    function moveElement(yPointer, cx){
+        if(cx == 2){
+            cy = yPointer;
+            cy++;
+            $("[id='" + cy + " " + cx + "']").html($("[id='" + (cy-1) + " " + (cx) + "']").html());
+            $("[id='" + (cy-1) + " " + cx + "']").html("");
+            tilesMat[cy][cx] = 2;
+            tilesMat[(cy-1)][cx] = 0;
+        }
+        else{
+            cy2 = yPointer;
+            cy2++;
+            $("[id='" + cy2 + " " + cx + "']").html($("[id='" + (cy2-1) + " " + (cx) + "']").html());
+            $("[id='" + (cy2-1) + " " + cx + "']").html("");
+            tilesMat[cy2][cx] = 2;
+            tilesMat[(cy2-1)][cx] = 0;
+        }
+    }
+}
+
+function spawnCarRev(){
+    let cy = 38, cx = 3;
+    tilesMat[cy][cx] = 2;
+    $("[id='38 3']").append("<img src='/img/slow_car2.png' width='30' height='30'/>");
+    setInterval(function(e){
+        if((cy-1) >= 0){
+            moveElement(cy, cx);
+        }
+    }, carSpeed);
+    function moveElement(yPointer, cx){
+        cy = yPointer;
+        cy--;
+        $("[id='" + cy + " " + cx + "']").html($("[id='" + (cy+1) + " " + (cx) + "']").html());
+        $("[id='" + (cy+1) + " " + cx + "']").html("");
+        tilesMat[cy][cx] = 2;
+        tilesMat[(cy+1)][cx] = 0;
+    }
+}
+function spawnCarFast(){
+    let cy = 0, cx = 5;
+    let carSpeed2 = 100;
+    tilesMat[cy][cx] = 2;
+    $("[id='0 5']").append("<img src='/img/fast_car.png' width='30' height='30'/>");
+    setInterval(function(e){
+        if((cy+1) < tilesMat.length){
+            moveElement(cy, cx);
+        }
+    }, carSpeed2);
+    function moveElement(yPointer, cx){
+        cy = yPointer;
+        cy++;
+        $("[id='" + cy + " " + cx + "']").html($("[id='" + (cy-1) + " " + (cx) + "']").html());
+        $("[id='" + (cy-1) + " " + cx + "']").html("");
+        tilesMat[cy][cx] = 2;
+        tilesMat[(cy-1)][cx] = 0;
+    }
+}
+function spawnLilypad(){
+    let cy = 0, cx = 8;
+    tilesMat[cy][cx] = 3;
+    $("[id='"+ cy +" "+ cx +"']").css({
+        "background-image": "url(/img/lilypad.png)",
+        "background-repeat": "no-repeat",
+        "background-size": "50%",
+        "background-position": "center"
+    });
+    setInterval(function(e){
         if((cy+1) < tilesMat.length){
             moveElement(cy, cx);
         }
     }, 500);
-    return spawnCar;
+    function moveElement(yPointer, cx){
+        cy = yPointer;
+        cy++;
+        $("[id='"+ cy +" "+ cx +"']").html($("[id='"+ (cy-1) +" "+ cx +"']").html());
+        $("[id='"+ (cy-1) +" "+ cx +"']").html("");
+        $("[id='"+ cy +" "+ cx +"']").css({
+            "background-image": "url(/img/lilypad.png)",
+            "background-repeat": "no-repeat",
+            "background-size": "50%",
+            "background-position": "center"
+        });
+        $("[id='"+ (cy-1) +" "+ cx +"']").removeAttr('style');
+        $("[id='"+ (cy-1) +" "+ cx +"']").css("background-color", "rgb(18, 18, 126)");
+        if(tilesMat[(cy-1)][cx] == 1){
+            tilesMat[cy][cx] = 1;
+            tilesMat[(cy-1)][cx] = 2;
+        }
+        else{
+            tilesMat[cy][cx] = 3;
+            tilesMat[(cy-1)][cx] = 2;
+        }
+    }
 }
-function moveElement(yPointer, cx){
-    cy = yPointer;
-    cy++;
-    console.log("y = " + cy);
-    $("[id='" + cy + " " + cx + "']").html($("[id='" + (cy-1) + " " + (cx) + "']").html());
-    $("[id='" + (cy-1) + " " + cx + "']").html("");
+function spawnLilypadRev(){
+    let cy = 39, cx = 11;
+    tilesMat[cy][cx] = 3;
+    $("[id='"+ cy +" "+ cx +"']").css({
+        "background-image": "url(/img/lilypad.png)",
+        "background-repeat": "no-repeat",
+        "background-size": "50%",
+        "background-position": "center"
+    });
+    setInterval(function(e){
+        if((cy-1) >= 0){
+            moveElement(cy, cx);
+        }
+    }, 500);
+    function moveElement(yPointer, cx){
+        cy = yPointer;
+        cy--;
+        $("[id='"+ cy +" "+ cx +"']").html($("[id='"+ (cy+1) +" "+ cx +"']").html());
+        $("[id='"+ (cy+1) +" "+ cx +"']").html("");
+        $("[id='"+ cy +" "+ cx +"']").css({
+            "background-image": "url(/img/lilypad.png)",
+            "background-repeat": "no-repeat",
+            "background-size": "50%",
+            "background-position": "center"
+        });
+        $("[id='"+ (cy+1) +" "+ cx +"']").removeAttr('style');
+        $("[id='"+ (cy+1) +" "+ cx +"']").css("background-color", "rgb(18, 18, 126)");
+        if(tilesMat[(cy+1)][cx] == 1){
+            tilesMat[cy][cx] = 1;
+            tilesMat[(cy+1)][cx] = 2;
+        }
+        else{
+            tilesMat[cy][cx] = 3;
+            tilesMat[(cy+1)][cx] = 2;
+        }
+    }
 }
-class myClass {
-    constructor(x , y){
-        this.x = x;
-        this.y = y;
+function spawnLog(){
+    let cy = 39, cx = 9;
+    tilesMat[cy][cx] = 3;
+    if(check2 == 0){
+        $("[id='"+ cy +" "+ cx +"']").css({
+            "background-image": "url(/img/pixil-frame-0.png)",
+            "background-repeat": "no-repeat",
+            "background-size": "50%",
+            "background-position": "center"
+        });
+    }
+    else if(check2 == 4){
+        $("[id='"+ cy +" "+ cx +"']").css({
+            "background-image": "url(/img/pixil-frame-2.png)",
+            "background-repeat": "no-repeat",
+            "background-size": "50%",
+            "background-position": "center"
+        });
+    }
+    else{
+        $("[id='"+ cy +" "+ cx +"']").css({
+            "background-image": "url(/img/pixil-frame-1.png)",
+            "background-repeat": "no-repeat",
+            "background-size": "50%",
+            "background-position": "center"
+        });
+    }
+    setInterval(function(e){
+        if((cy-1) >= 0){
+            moveElement(cy, cx);
+        }
+    }, 1000);
+    function moveElement(yPointer, cx){
+        cy = yPointer;
+        cy--;
+        $("[id='"+ cy +" "+ cx +"']").html($("[id='"+ (cy+1) +" "+ cx +"']").html());
+        $("[id='"+ (cy+1) +" "+ cx +"']").html("");
+        $("[id='"+ cy +" "+ cx +"']").css($("[id='"+ (cy+1) +" "+ cx +"']").css([
+            "background-image",
+            "background-repeat",
+            "background-size",
+            "background-position"
+        ]));
+        $("[id='"+ (cy+1) +" "+ cx +"']").removeAttr('style');
+        $("[id='"+ (cy+1) +" "+ cx +"']").css("background-color", "rgb(18, 18, 126)");
+        if(tilesMat[(cy+1)][cx] == 1){
+            tilesMat[cy][cx] = 1;
+            tilesMat[(cy+1)][cx] = 2;
+        }
+        else{
+            tilesMat[cy][cx] = 3;
+            tilesMat[(cy+1)][cx] = 2;
+        }
+    }
+}
+function spawnLogRev(){
+    let cy = 0, cx = 10;
+    tilesMat[cy][cx] = 3;
+    if(check3 == 0){
+        $("[id='"+ cy +" "+ cx +"']").css({
+            "background-image": "url(/img/pixil-frame-2.png)",
+            "background-repeat": "no-repeat",
+            "background-size": "50%",
+            "background-position": "center"
+        });
+    }
+    else if(check3 == 9){
+        $("[id='"+ cy +" "+ cx +"']").css({
+            "background-image": "url(/img/pixil-frame-0.png)",
+            "background-repeat": "no-repeat",
+            "background-size": "50%",
+            "background-position": "center"
+        });
+    }
+    else{
+        $("[id='"+ cy +" "+ cx +"']").css({
+            "background-image": "url(/img/pixil-frame-1.png)",
+            "background-repeat": "no-repeat",
+            "background-size": "50%",
+            "background-position": "center"
+        });
+    }
+    setInterval(function(e){
+        if((cy+1) < tilesMat.length){
+            moveElement(cy, cx);
+        }
+    }, 1000);
+    function moveElement(yPointer, cx){
+        cy = yPointer;
+        cy++;
+        $("[id='"+ cy +" "+ cx +"']").html($("[id='"+ (cy-1) +" "+ cx +"']").html());
+        $("[id='"+ (cy-1) +" "+ cx +"']").html("");
+        $("[id='"+ cy +" "+ cx +"']").css($("[id='"+ (cy-1) +" "+ cx +"']").css([
+            "background-image",
+            "background-repeat",
+            "background-size",
+            "background-position"
+        ]));
+        $("[id='"+ (cy-1) +" "+ cx +"']").removeAttr('style');
+        $("[id='"+ (cy-1) +" "+ cx +"']").css("background-color", "rgb(18, 18, 126)");
+        if(tilesMat[(cy-1)][cx] == 1){
+            tilesMat[cy][cx] = 1;
+            tilesMat[(cy-1)][cx] = 2;
+        }
+        else{
+            tilesMat[cy][cx] = 3;
+            tilesMat[(cy-1)][cx] = 2;
+        }
     }
 }

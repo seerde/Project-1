@@ -1,7 +1,12 @@
 * {
     margin: 0;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     font-family: "myFirstFont";
+}
+html, body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden
 }
 .menu {
     height: 100vh;
@@ -65,8 +70,12 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    /* height: 100%; */
+    height: 2.5vh;
 }
+    /* background-image: url(/img/lilypad.png);
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: center; */
 
 @font-face {
     font-family: myFirstFont;
