@@ -1,5 +1,7 @@
 # Frogger
 
+### [link to the game](https://pages.git.generalassemb.ly/alyamaniedrees/Project_Prompt_1/)
+
 ## **Libraries Used:**
 
 ### **jQuery**
@@ -7,6 +9,26 @@
 Only jQuery library were used to create this project.
 
 ## **Approach:**
+
+### **Wireframe:**
+
+Landing screen
+
+![Wireframe 1](./img/wireframe1.png)
+
+Game screen
+
+![Wireframe 1](./img/wireframe2.jpg)
+
+### **Screenshots:**
+
+Landing screen
+
+![Wireframe 1](./img/landing_screen.png)
+
+Game screen
+
+![Wireframe 1](./img/game_screen.png)
 
 This project uses **CSS Grid Layout Module** heavily to imitate the the arcade game **Frogger**.
 * `createMap` Function creates a 2D matrix with given X and Y values.
