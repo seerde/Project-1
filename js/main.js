@@ -21,7 +21,7 @@ let win = 0;
 let min=2000, max=4001;
 let randomInt = Math.floor(Math.random() * (max - min)) + min;
 let carSpeed = 400;
-let timer = 999;
+let timer = 75;
 let froggerHop = new sound("./sounds/sound-frogger-hop.wav");
 let froggerSquash = new sound("./sounds/sound-frogger-squash.wav");
 let froggerWin = new sound("./sounds/sound-frogger-win.mp3");
@@ -32,6 +32,8 @@ drawTiles();
 startGame.click(function(e){
     menuScreen.hide();
     gameScreen.show();
+    $("#inst1").hide();
+    $("#inst2").hide();
     $(".timer span").text(timer);
     $(".timer").show();
     setInterval(function(e){
@@ -43,6 +45,10 @@ startGame.click(function(e){
             location.reload(true);
         }
     }, 1000);
+});
+$("#instructions").click(function(e){
+    $("#inst1").toggleClass("hide");
+    $("#inst2").toggleClass("hide");
 });
 
 // w = 87 a = 65 s = 83 d = 68
@@ -758,6 +764,7 @@ function nextFrogger(){
     timer += 30;
     win++;
     tilesMat[y][(x+1)] = 5;
+    tilesMat[y][(x)] = 2;
     tilesMat[20][0] = 1;
     $("[id='" + 20 + " " + 0 + "']").html($("[id='" + y + " " + x + "']").html());
     $("[id='" + y + " " + x + "']").html("");
