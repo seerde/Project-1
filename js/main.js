@@ -21,8 +21,8 @@ let min=2000, max=4001;
 let randomInt = Math.floor(Math.random() * (max - min)) + min;
 let carSpeed = 400;
 let timer = 999;
-let froggerHop = new sound("/sounds/sound-frogger-hop.wav");
-let froggerSquash = new sound("/sounds/sound-frogger-squash.wav");
+let froggerHop = new sound("./sounds/sound-frogger-hop.wav");
+let froggerSquash = new sound("./sounds/sound-frogger-squash.wav");
 
 findChar();
 drawTiles();
@@ -347,14 +347,14 @@ function drawTiles(){
     for(let i=0; i<tilesMat.length; i++){
         for(let j=0; j<tilesMat[i].length; j++){
             if(tilesMat[i][j] == 1){
-                gridMap.append("<div id='" + i +" " + j +"' class='tile'><img src='/img/frogger.png' width='30' height='30'/></div>");
+                gridMap.append("<div id='" + i +" " + j +"' class='tile'><img src='./img/frogger.png' width='30' height='30'/></div>");
             }
             else {
                 gridMap.append("<div id='" + i +" " + j +"' class='tile'></div>");
             }
             if(j == 0 || j == 1 || j == 6 || j == 7){
                 $("[id='" + i + " "+ j + "']").css({
-                    "background-image": "url(/img/grass.png)",
+                    "background-image": "url(./img/grass.png)",
                     "background-repeat": "no-repeat",
                     "background-size": "auto",
                     "background-position": "center"
@@ -362,7 +362,7 @@ function drawTiles(){
             }
             if(j == 13 || j == 14){
                 $("[id='" + i + " "+ j + "']").css({
-                    "background-image": "url(/img/grass2.png)",
+                    "background-image": "url(./img/grass2.png)",
                     "background-repeat": "no-repeat",
                     "background-size": "auto",
                     "background-position": "center"
@@ -407,8 +407,8 @@ function spawnCar(){
     let cy2 = 0, cx2 = 4;
     tilesMat[cy][cx] = 2;
     tilesMat[cy2][cx2] = 2;
-    $("[id='0 2']").append("<img src='/img/slow_car1.png' width='30' height='30'/>");
-    $("[id='0 4']").append("<img src='/img/slow_car3.png' width='30' height='30'/>");
+    $("[id='0 2']").append("<img src='./img/slow_car1.png' width='30' height='30'/>");
+    $("[id='0 4']").append("<img src='./img/slow_car3.png' width='30' height='30'/>");
     setInterval(function(e){
         if((cy+1) < tilesMat.length){
             moveElement(cy, cx);
@@ -449,7 +449,7 @@ function spawnCar(){
 function spawnCarRev(){
     let cy = 38, cx = 3;
     tilesMat[cy][cx] = 2;
-    $("[id='38 3']").append("<img src='/img/slow_car2.png' width='30' height='30'/>");
+    $("[id='38 3']").append("<img src='./img/slow_car2.png' width='30' height='30'/>");
     setInterval(function(e){
         if((cy-1) >= 0){
             moveElement(cy, cx);
@@ -473,7 +473,7 @@ function spawnCarFast(){
     let cy = 0, cx = 5;
     let carSpeed2 = 100;
     tilesMat[cy][cx] = 2;
-    $("[id='0 5']").append("<img src='/img/fast_car.png' width='30' height='30'/>");
+    $("[id='0 5']").append("<img src='./img/fast_car.png' width='30' height='30'/>");
     setInterval(function(e){
         if((cy+1) < tilesMat.length){
             moveElement(cy, cx);
@@ -497,7 +497,7 @@ function spawnLilypad(){
     let cy = 0, cx = 8;
     tilesMat[cy][cx] = 3;
     $("[id='"+ cy +" "+ cx +"']").css({
-        "background-image": "url(/img/lilypad.png)",
+        "background-image": "url(./img/lilypad.png)",
         "background-repeat": "no-repeat",
         "background-size": "50%",
         "background-position": "center"
@@ -513,7 +513,7 @@ function spawnLilypad(){
         $("[id='"+ cy +" "+ cx +"']").html($("[id='"+ (cy-1) +" "+ cx +"']").html());
         $("[id='"+ (cy-1) +" "+ cx +"']").html("");
         $("[id='"+ cy +" "+ cx +"']").css({
-            "background-image": "url(/img/lilypad.png)",
+            "background-image": "url(./img/lilypad.png)",
             "background-repeat": "no-repeat",
             "background-size": "50%",
             "background-position": "center"
@@ -534,7 +534,7 @@ function spawnLilypadRev(){
     let cy = 39, cx = 11;
     tilesMat[cy][cx] = 3;
     $("[id='"+ cy +" "+ cx +"']").css({
-        "background-image": "url(/img/lilypad.png)",
+        "background-image": "url(./img/lilypad.png)",
         "background-repeat": "no-repeat",
         "background-size": "50%",
         "background-position": "center"
@@ -550,7 +550,7 @@ function spawnLilypadRev(){
         $("[id='"+ cy +" "+ cx +"']").html($("[id='"+ (cy+1) +" "+ cx +"']").html());
         $("[id='"+ (cy+1) +" "+ cx +"']").html("");
         $("[id='"+ cy +" "+ cx +"']").css({
-            "background-image": "url(/img/lilypad.png)",
+            "background-image": "url(./img/lilypad.png)",
             "background-repeat": "no-repeat",
             "background-size": "50%",
             "background-position": "center"
@@ -572,7 +572,7 @@ function spawnLog(){
     tilesMat[cy][cx] = 3;
     if(check2 == 0){
         $("[id='"+ cy +" "+ cx +"']").css({
-            "background-image": "url(/img/pixil-frame-0.png)",
+            "background-image": "url(./img/pixil-frame-0.png)",
             "background-repeat": "no-repeat",
             "background-size": "50%",
             "background-position": "center"
@@ -580,7 +580,7 @@ function spawnLog(){
     }
     else if(check2 == 4){
         $("[id='"+ cy +" "+ cx +"']").css({
-            "background-image": "url(/img/pixil-frame-2.png)",
+            "background-image": "url(./img/pixil-frame-2.png)",
             "background-repeat": "no-repeat",
             "background-size": "50%",
             "background-position": "center"
@@ -588,7 +588,7 @@ function spawnLog(){
     }
     else{
         $("[id='"+ cy +" "+ cx +"']").css({
-            "background-image": "url(/img/pixil-frame-1.png)",
+            "background-image": "url(./img/pixil-frame-1.png)",
             "background-repeat": "no-repeat",
             "background-size": "50%",
             "background-position": "center"
@@ -627,7 +627,7 @@ function spawnLogRev(){
     tilesMat[cy][cx] = 3;
     if(check3 == 0){
         $("[id='"+ cy +" "+ cx +"']").css({
-            "background-image": "url(/img/pixil-frame-2.png)",
+            "background-image": "url(./img/pixil-frame-2.png)",
             "background-repeat": "no-repeat",
             "background-size": "50%",
             "background-position": "center"
@@ -635,7 +635,7 @@ function spawnLogRev(){
     }
     else if(check3 == 9){
         $("[id='"+ cy +" "+ cx +"']").css({
-            "background-image": "url(/img/pixil-frame-0.png)",
+            "background-image": "url(./img/pixil-frame-0.png)",
             "background-repeat": "no-repeat",
             "background-size": "50%",
             "background-position": "center"
@@ -643,7 +643,7 @@ function spawnLogRev(){
     }
     else{
         $("[id='"+ cy +" "+ cx +"']").css({
-            "background-image": "url(/img/pixil-frame-1.png)",
+            "background-image": "url(./img/pixil-frame-1.png)",
             "background-repeat": "no-repeat",
             "background-size": "50%",
             "background-position": "center"
@@ -682,7 +682,7 @@ function spawnLogRev2(){
     tilesMat[cy][cx] = 3;
     if(check5 == 0){
         $("[id='"+ cy +" "+ cx +"']").css({
-            "background-image": "url(/img/pixil-frame-2.png)",
+            "background-image": "url(./img/pixil-frame-2.png)",
             "background-repeat": "no-repeat",
             "background-size": "50%",
             "background-position": "center"
@@ -690,7 +690,7 @@ function spawnLogRev2(){
     }
     else if(check5 == 6){
         $("[id='"+ cy +" "+ cx +"']").css({
-            "background-image": "url(/img/pixil-frame-0.png)",
+            "background-image": "url(./img/pixil-frame-0.png)",
             "background-repeat": "no-repeat",
             "background-size": "50%",
             "background-position": "center"
@@ -698,7 +698,7 @@ function spawnLogRev2(){
     }
     else{
         $("[id='"+ cy +" "+ cx +"']").css({
-            "background-image": "url(/img/pixil-frame-1.png)",
+            "background-image": "url(./img/pixil-frame-1.png)",
             "background-repeat": "no-repeat",
             "background-size": "50%",
             "background-position": "center"

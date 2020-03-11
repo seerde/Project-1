@@ -89,5 +89,5 @@ html, body {
 
 @font-face {
     font-family: myFirstFont;
-    src: url(/css/Passero_One/PasseroOne-Regular.ttf);
+    src: url(./Passero_One/PasseroOne-Regular.ttf);
   }
