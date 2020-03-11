@@ -24,11 +24,11 @@ Game screen
 
 Landing screen
 
-![Wireframe 1](./img/landing_screen.png)
+![Wireframe 1](./img/landing_screen.PNG)
 
 Game screen
 
-![Wireframe 1](./img/game_screen.png)
+![Wireframe 1](./img/game_screen.PNG)
 
 This project uses **CSS Grid Layout Module** heavily to imitate the the arcade game **Frogger**.
 * `createMap` Function creates a 2D matrix with given X and Y values.
