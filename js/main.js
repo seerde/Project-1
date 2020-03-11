@@ -1,5 +1,5 @@
-// 0 = save, 1 = player, 2 = cars, 3 = save(moving)
-let tilesMat = createMap(40,20);
+// 0 = save, 1 = player, 2 = cars, 3 = save(moving), 4 = win
+let tilesMat = createMap(40,15);
 printMap();
 
 let menuScreen = $(".menu__container");
@@ -15,17 +15,32 @@ let startGame = $("#start__game");
 
 let y=0, x=0;
 let sy=0, sx=7;
-let check=0, check2=0, check3=0, check4=0;
+let check=0, check2=0, check3=0, check4=0, check5=0;
 
 let min=2000, max=4001;
 let randomInt = Math.floor(Math.random() * (max - min)) + min;
 let carSpeed = 400;
+let timer = 999;
+let froggerHop = new sound("/sounds/sound-frogger-hop.wav");
+let froggerSquash = new sound("/sounds/sound-frogger-squash.wav");
+
 findChar();
 drawTiles();
 
 startGame.click(function(e){
     menuScreen.hide();
     gameScreen.show();
+    $(".timer span").text(timer);
+    $(".timer").show();
+    setInterval(function(e){
+        timer--;
+        $(".timer span").text(timer);
+        if(timer == -1){
+            froggerSquash.play();
+            alert("Game Over");
+            location.reload(true);
+        }
+    }, 1000);
 });
 
 // w = 87 a = 65 s = 83 d = 68
@@ -39,6 +54,8 @@ $(document).keydown(function (e) {
                 break;
             }
             if(tilesMat[y-1][x] == 0 || tilesMat[y-1][x] == 3){
+                froggerHop.load();
+                froggerHop.play();
                 let currentTile = $("[id='" + y + " " + x + "']");
                 let nexTile = $("[id='" + (y-1) + " " + x + "']");
                 nexTile.html(currentTile.html());
@@ -47,7 +64,8 @@ $(document).keydown(function (e) {
                 tilesMat[y-1][x] = 1;
                 printMap();
             }
-            else {
+            else  if(tilesMat[y][x+1] == 2){
+                froggerSquash.play();
                 alert("Game over");
                 location.reload(true);
             }
@@ -56,6 +74,8 @@ $(document).keydown(function (e) {
             findChar();
             console.log("A");
             if(tilesMat[y][x-1] == 0 || tilesMat[y][x-1] == 3){
+                froggerHop.load();
+                froggerHop.play();
                 let currentTile = $("[id='" + y + " " + x + "']");
                 let nexTile = $("[id='" + y + " " + (x-1) + "']");
                 nexTile.html(currentTile.html());
@@ -64,7 +84,8 @@ $(document).keydown(function (e) {
                 tilesMat[y][x-1] = 1;
                 printMap();
             }
-            else {
+            else  if(tilesMat[y][x+1] == 2){
+                froggerSquash.play();
                 alert("Game over");
                 location.reload(true);
             }
@@ -76,6 +97,8 @@ $(document).keydown(function (e) {
                 break;
             }
             if(tilesMat[y+1][x] == 0 || tilesMat[y+1][x] == 3){
+                froggerHop.load();
+                froggerHop.play();
                 let currentTile = $("[id='" + y + " " + x + "']");
                 let nexTile = $("[id='" + (y+1) + " " + x + "']");
                 nexTile.html(currentTile.html());
@@ -84,7 +107,8 @@ $(document).keydown(function (e) {
                 tilesMat[y+1][x] = 1;
                 printMap();
             }
-            else {
+            else  if(tilesMat[y][x+1] == 2){
+                froggerSquash.play();
                 alert("Game over");
                 location.reload(true);
             }
@@ -93,6 +117,8 @@ $(document).keydown(function (e) {
             findChar();
             console.log("D");
             if(tilesMat[y][x+1] == 0 || tilesMat[y][x+1] == 3){
+                froggerHop.load();
+                froggerHop.play();
                 let currentTile = $("[id='" + y + " " + x + "']");
                 let nexTile = $("[id='" + y + " " + (x+1) + "']");
                 nexTile.html(currentTile.html());
@@ -101,7 +127,12 @@ $(document).keydown(function (e) {
                 tilesMat[y][x+1] = 1;
                 printMap();
             }
-            else {
+            else if(tilesMat[y][x+1] == 4){
+                alert("Win");
+                location.reload(true);
+            }
+            else if(tilesMat[y][x+1] == 2){
+                froggerSquash.play();
                 alert("Game over");
                 location.reload(true);
             }
@@ -178,19 +209,38 @@ function LogSpawnerRev(){
     let rand = 0;
     if(check3 < 9){
         console.log(check);
-        let min = 1000, max = 1001;
+        let min = 300, max = 301;
         rand = Math.floor(Math.random() * (max - min + 1) + min);
         spawnLogRev();
         check3++;
     }
     else{
-        let min = 6000, max = 9001;
+        let min = 1000, max = 2001;
         rand = Math.floor(Math.random() * (max - min + 1) + min);
         spawnLogRev();
         check3=0;
     }
 
     setTimeout(LogSpawnerRev, rand);
+}
+LogSpawnerRev2();
+function LogSpawnerRev2(){
+    let rand = 0;
+    if(check5 < 6){
+        console.log(check);
+        let min = 700, max = 701;
+        rand = Math.floor(Math.random() * (max - min + 1) + min);
+        spawnLogRev2();
+        check5++;
+    }
+    else{
+        let min = 3000, max = 6001;
+        rand = Math.floor(Math.random() * (max - min + 1) + min);
+        spawnLogRev2();
+        check5=0;
+    }
+
+    setTimeout(LogSpawnerRev2, rand);
 }
 lilypadSpawnerRev();
 function lilypadSpawnerRev(){
@@ -259,6 +309,13 @@ setInterval(function(e){
         tilesMat[0][11] = 2;
         clearInterval(spawnLilypadRev);
     }
+    if(tilesMat[39][12] == 3){
+        $("[id='" + 39 + " " + 12 + "']").html("");
+        $("[id='"+ 39 +" "+ 12 +"']").removeAttr('style');
+        $("[id='"+ 39 +" "+ 12 +"']").css("background-color", "rgb(18, 18, 126)");
+        tilesMat[39][12] = 2;
+        clearInterval(spawnLogRev2);
+    }
 }, 100);
 
 function findChar(){
@@ -295,12 +352,37 @@ function drawTiles(){
             else {
                 gridMap.append("<div id='" + i +" " + j +"' class='tile'></div>");
             }
+            if(j == 0 || j == 1 || j == 6 || j == 7){
+                $("[id='" + i + " "+ j + "']").css({
+                    "background-image": "url(/img/grass.png)",
+                    "background-repeat": "no-repeat",
+                    "background-size": "auto",
+                    "background-position": "center"
+                });
+            }
+            if(j == 13 || j == 14){
+                $("[id='" + i + " "+ j + "']").css({
+                    "background-image": "url(/img/grass2.png)",
+                    "background-repeat": "no-repeat",
+                    "background-size": "auto",
+                    "background-position": "center"
+                });
+                tilesMat[i][j] = 5;
+            }
             if(j > 1 && j < 6){
                 $("[id='" + i + " "+ j + "']").css("background-color", "black");
             }
-            if(j > 7 && j < 14){
+            if(j > 7 && j < 13){
                 $("[id='" + i + " "+ j + "']").css("background-color", "rgb(18, 18, 126)");
                 tilesMat[i][j] = 2;
+            }
+            if((j == 13 && i % 8 == 0) && i != 0){
+                $("[id='" + i + " "+ j + "']").removeAttr('style');
+                $("[id='" + (i-1) + " "+ j + "']").removeAttr('style');
+                $("[id='" + i + " "+ j + "']").css("background-color", "rgb(18, 18, 126)");
+                $("[id='" + (i-1) + " "+ j + "']").css("background-color", "rgb(18, 18, 126)");
+                tilesMat[i][j] = 4;
+                tilesMat[i-1][j] = 4;
             }
         }
     }
@@ -341,6 +423,11 @@ function spawnCar(){
             cy++;
             $("[id='" + cy + " " + cx + "']").html($("[id='" + (cy-1) + " " + (cx) + "']").html());
             $("[id='" + (cy-1) + " " + cx + "']").html("");
+            if(tilesMat[cy][cx] == 1){
+                froggerSquash.play();
+                alert("Game Over");
+                location.reload(true);
+            }
             tilesMat[cy][cx] = 2;
             tilesMat[(cy-1)][cx] = 0;
         }
@@ -349,12 +436,16 @@ function spawnCar(){
             cy2++;
             $("[id='" + cy2 + " " + cx + "']").html($("[id='" + (cy2-1) + " " + (cx) + "']").html());
             $("[id='" + (cy2-1) + " " + cx + "']").html("");
+            if(tilesMat[cy][cx] == 1){
+                froggerSquash.play();
+                alert("Game Over");
+                location.reload(true);
+            }
             tilesMat[cy2][cx] = 2;
             tilesMat[(cy2-1)][cx] = 0;
         }
     }
 }
-
 function spawnCarRev(){
     let cy = 38, cx = 3;
     tilesMat[cy][cx] = 2;
@@ -369,6 +460,11 @@ function spawnCarRev(){
         cy--;
         $("[id='" + cy + " " + cx + "']").html($("[id='" + (cy+1) + " " + (cx) + "']").html());
         $("[id='" + (cy+1) + " " + cx + "']").html("");
+        if(tilesMat[cy][cx] == 1){
+            froggerSquash.play();
+            alert("Game Over");
+            location.reload(true);
+        }
         tilesMat[cy][cx] = 2;
         tilesMat[(cy+1)][cx] = 0;
     }
@@ -388,6 +484,11 @@ function spawnCarFast(){
         cy++;
         $("[id='" + cy + " " + cx + "']").html($("[id='" + (cy-1) + " " + (cx) + "']").html());
         $("[id='" + (cy-1) + " " + cx + "']").html("");
+        if(tilesMat[cy][cx] == 1){
+            froggerSquash.play();
+            alert("Game Over");
+            location.reload(true);
+        }
         tilesMat[cy][cx] = 2;
         tilesMat[(cy-1)][cx] = 0;
     }
@@ -552,7 +653,7 @@ function spawnLogRev(){
         if((cy+1) < tilesMat.length){
             moveElement(cy, cx);
         }
-    }, 1000);
+    }, 300);
     function moveElement(yPointer, cx){
         cy = yPointer;
         cy++;
@@ -576,3 +677,76 @@ function spawnLogRev(){
         }
     }
 }
+function spawnLogRev2(){
+    let cy = 0, cx = 12;
+    tilesMat[cy][cx] = 3;
+    if(check5 == 0){
+        $("[id='"+ cy +" "+ cx +"']").css({
+            "background-image": "url(/img/pixil-frame-2.png)",
+            "background-repeat": "no-repeat",
+            "background-size": "50%",
+            "background-position": "center"
+        });
+    }
+    else if(check5 == 6){
+        $("[id='"+ cy +" "+ cx +"']").css({
+            "background-image": "url(/img/pixil-frame-0.png)",
+            "background-repeat": "no-repeat",
+            "background-size": "50%",
+            "background-position": "center"
+        });
+    }
+    else{
+        $("[id='"+ cy +" "+ cx +"']").css({
+            "background-image": "url(/img/pixil-frame-1.png)",
+            "background-repeat": "no-repeat",
+            "background-size": "50%",
+            "background-position": "center"
+        });
+    }
+    setInterval(function(e){
+        if((cy+1) < tilesMat.length){
+            moveElement(cy, cx);
+        }
+    }, 700);
+    function moveElement(yPointer, cx){
+        cy = yPointer;
+        cy++;
+        $("[id='"+ cy +" "+ cx +"']").html($("[id='"+ (cy-1) +" "+ cx +"']").html());
+        $("[id='"+ (cy-1) +" "+ cx +"']").html("");
+        $("[id='"+ cy +" "+ cx +"']").css($("[id='"+ (cy-1) +" "+ cx +"']").css([
+            "background-image",
+            "background-repeat",
+            "background-size",
+            "background-position"
+        ]));
+        $("[id='"+ (cy-1) +" "+ cx +"']").removeAttr('style');
+        $("[id='"+ (cy-1) +" "+ cx +"']").css("background-color", "rgb(18, 18, 126)");
+        if(tilesMat[(cy-1)][cx] == 1){
+            tilesMat[cy][cx] = 1;
+            tilesMat[(cy-1)][cx] = 2;
+        }
+        else{
+            tilesMat[cy][cx] = 3;
+            tilesMat[(cy-1)][cx] = 2;
+        }
+    }
+}
+function sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function(){
+      this.sound.play();
+    }
+    this.stop = function(){
+      this.sound.pause();
+    }
+    this.load = function(){
+        this.sound.load();
+    }
+  }
+  

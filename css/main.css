@@ -10,11 +10,12 @@ html, body {
 }
 .menu {
     height: 100vh;
-    background-color: darksalmon;
-    /* background-image: linear-gradient(to right top, #41bb3d, #27b452, #08ad63, #00a56f, #009d78, #00957d, #008d80, #008581, #007c80, #00737e, #00697a, #006075); */
+    /* background-color: darksalmon; */
+    background-image: linear-gradient(to right top, #113c11, #003520, #002d28, #002429, #051b22, #042029, #03262f, #002b36, #00424b, #005954, #007152, #068744);
 }
 .menu__container {
-    background-color: coral;
+    /* background-color: coral; */
+    background-image: linear-gradient(to top, #000000, #1a000d, #23001e, #220032, #01044d);
     width: 80%;
     height: 100vh;
     margin-top: 0;
@@ -26,6 +27,7 @@ html, body {
     flex-direction: column;
     justify-content: center;
     text-align: center;
+    color: rgb(9, 168, 23);
 }
 .logo {
     width: 60%;
@@ -46,7 +48,7 @@ html, body {
 /*/////////////////////////////////*/
 .game {
     display: none;
-    background-color: rgb(128, 48, 18);
+    /* background-color: rgb(128, 48, 18); */
     width: 80%;
     height: 100vh;
     margin-top: 0;
@@ -71,6 +73,14 @@ html, body {
     align-items: center;
     width: 100%;
     height: 2.5vh;
+}
+.timer {
+    position: absolute;
+    left: 100px;
+    top: 30px;
+    color: white;
+    font-size: 50px;
+    display: none;
 }
     /* background-image: url(/img/lilypad.png);
     background-repeat: no-repeat;
