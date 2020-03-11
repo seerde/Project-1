@@ -1,4 +1,4 @@
-// 0 = save, 1 = player, 2 = cars, 3 = save(moving), 4 = win
+// 0 = save, 1 = player, 2 = cars, 3 = save(moving), 4 = win, 5 = block
 let tilesMat = createMap(40,15);
 printMap();
 
@@ -16,6 +16,7 @@ let startGame = $("#start__game");
 let y=0, x=0;
 let sy=0, sx=7;
 let check=0, check2=0, check3=0, check4=0, check5=0;
+let win = 0;
 
 let min=2000, max=4001;
 let randomInt = Math.floor(Math.random() * (max - min)) + min;
@@ -23,6 +24,7 @@ let carSpeed = 400;
 let timer = 999;
 let froggerHop = new sound("./sounds/sound-frogger-hop.wav");
 let froggerSquash = new sound("./sounds/sound-frogger-squash.wav");
+let froggerWin = new sound("./sounds/sound-frogger-win.mp3");
 
 findChar();
 drawTiles();
@@ -128,8 +130,9 @@ $(document).keydown(function (e) {
                 printMap();
             }
             else if(tilesMat[y][x+1] == 4){
-                alert("Win");
-                location.reload(true);
+                nextFrogger();
+                // alert("Win");
+                // location.reload(true);
             }
             else if(tilesMat[y][x+1] == 2){
                 froggerSquash.play();
@@ -337,7 +340,6 @@ function printMap(){
     }
     console.log(tmp+"\n");
 }
-
 function drawTiles(){
     let fr = "";
     for(let i=0; i<tilesMat[0].length; i++){
@@ -748,5 +750,19 @@ function sound(src) {
     this.load = function(){
         this.sound.load();
     }
-  }
-  
+}
+function nextFrogger(){
+    findChar();
+    $("[id='"+y+" "+(x+1)+"']").append("<img src='./img/frogger_win.png' height='50'/>");
+    froggerWin.play();
+    timer += 30;
+    win++;
+    tilesMat[y][(x+1)] = 5;
+    tilesMat[20][0] = 1;
+    $("[id='" + 20 + " " + 0 + "']").html($("[id='" + y + " " + x + "']").html());
+    $("[id='" + y + " " + x + "']").html("");
+    if(win == 4){
+        alert("Finished!\nScore: "+timer);
+        location.load(true);
+    }
+}
